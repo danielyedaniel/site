@@ -34,7 +34,7 @@ function App() {
         <section>
           <h2>Resources</h2>
           <ul style={linksContainerStyle}>
-            <li><a href="/Daniel_Ye_Resume_EA.pdf" style={linkStyle} target="_blank" rel="noopener noreferrer">Resume</a></li>
+            <li><a href="/Daniel_Ye_Resume.pdf" style={linkStyle} target="_blank" rel="noopener noreferrer">Resume</a></li>
             <li><a href="https://linkedin.com/in/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             <li><a href="https://github.com/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">Github</a></li>
             {/* <li><a href="/about" style={linkStyle}>About Me</a></li> */}
