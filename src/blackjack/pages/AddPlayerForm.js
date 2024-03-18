@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import CustomTextField from '../../generics/TextField';
 
 function AddPlayerForm({ onAddPlayer, errorMessage }) {

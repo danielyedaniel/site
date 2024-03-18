@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import CustomSelect from '../../generics/SelectField';
 import CustomTextField from '../../generics/TextField';
 
