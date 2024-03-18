@@ -1,50 +1,64 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-export const appStyle = {
-  minHeight: '100vh',
-  color: 'white',
-  fontFamily: 'monospace',
-  textAlign: 'center',
-  backgroundColor: '#120A2F',
-  padding: '20px',
-};
-
-export const linkStyle = {
-  color: '#007BFF',
-  textDecoration: 'none',
-  margin: '0 10px',
-};
-
-export const linksContainerStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  listStyleType: 'none',
-  padding: 0,
-  marginTop: '20px',
-};
-
+import { Link as RouterLink } from 'react-router-dom';
+import { Typography, Link, Button, Container, Grid, Paper, Box } from '@mui/material';
 
 function Homepage() {
   return (
-    <div style={appStyle}>
-      <header>
-        <h1>Daniel Ye</h1>
-      </header>
-      <main>
-        <section>
-          <p>This is my website :)</p>
-              <h2>Resources</h2>
-              <ul style={linksContainerStyle}>
-                <li><Link to="/about" style={linkStyle}>About Me</Link></li>
-                <li><Link to="/blackjack" style={linkStyle}>Bj</Link></li>
-                <li><a href="/Daniel_Ye_Resume.pdf" style={linkStyle} target="_blank" rel="noopener noreferrer">Resume</a></li>
-                <li><a href="https://linkedin.com/in/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><a href="https://github.com/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">Github</a></li>
-              </ul>
-          </section>
-      </main>
-    </div>
+    <Container maxWidth="md" sx={{
+      minHeight: '50vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center', // Centers the Paper vertically
+      bgcolor: '#121212', // Dark theme background
+      color: '#ffffff',
+    }}>
+      <Paper elevation={6} sx={{
+        py: 5,
+        px: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: '#1E1E1E', // Adjusted to match the screenshot
+        borderRadius: 2,
+        color: '#ffffff',
+      }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Daniel Ye
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          This is my website :)
+        </Typography>
+        <Box my={4}>
+          {/* Links are horizontally aligned */}
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item>
+              <Link component={RouterLink} to="/about" underline="none" color="inherit" variant="h6" sx={{ mx: 2 }}>
+                About Me
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="../../public/Daniel_Ye_Resume.pdf" target="_blank" rel="noopener noreferrer" underline="none" color="inherit" variant="h6" sx={{ mx: 2 }}>
+                Resume
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="https://linkedin.com/in/danielyedaniel" target="_blank" rel="noopener noreferrer" underline="none" color="inherit" variant="h6" sx={{ mx: 2 }}>
+                LinkedIn
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="https://github.com/danielyedaniel" target="_blank" rel="noopener noreferrer" underline="none" color="inherit" variant="h6" sx={{ mx: 2 }}>
+                Github
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+        {/* Balance Sheet button centered and styled according to the screenshot */}
+        <Button variant="contained" color="primary" component={RouterLink} to="/blackjack" sx={{ mt: 3, borderRadius: 20 }}>
+          Balance Sheet
+        </Button>
+      </Paper>
+    </Container>
   );
 }
 

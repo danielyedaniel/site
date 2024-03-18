@@ -1,6 +1,6 @@
 // About.js
 import React from 'react';
-import {appStyle, linksContainerStyle} from './Homepage'
+import {appStyle, linksContainerStyle} from '../theme/Theme';
 function About() {
   return (
     <div style={appStyle}>
