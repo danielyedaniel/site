@@ -4,7 +4,7 @@ import AddPlayerForm from './pages/AddPlayerForm';
 import AddDebtForm from './pages/AddDebtForm';
 import BalanceSheet from './pages/BalanceSheet';
 import LoginForm from './pages/LoginForm';
-import { loadPlayers, savePlayers, clearPlayersCache } from './cache/cacheUtils';
+import { loadPlayers, savePlayers } from './cache/cacheUtils';
 
 const BlackJackSheet = () => {
   const [loggedIn, setLoggedIn] = useState(false);
