@@ -1,22 +1,16 @@
-import React, { useState,  useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Grid, Paper, Button } from '@mui/material';
 import AddPlayerForm from './pages/AddPlayerForm';
 import AddDebtForm from './pages/AddDebtForm';
 import BalanceSheet from './pages/BalanceSheet';
 import LoginForm from './pages/LoginForm';
-import { loadPlayers, savePlayers } from './cache/cacheUtils';
 
 const BlackJackSheet = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
-  const [showLoginForm, setShowLoginForm] = useState(true); // Show login form by default
-  const [players, setPlayers] = useState(loadPlayers());
+  const [showLoginForm, setShowLoginForm] = useState(true);
   const [balances, setBalances] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    savePlayers(players);
-  }, [players]);
 
   const handleLoginSuccess = (username) => {
     setLoggedIn(true);
@@ -30,13 +24,13 @@ const BlackJackSheet = () => {
     setShowLoginForm(false); 
   };
 
-  const renderLoginForm = (players, errorMessage) => (
+  const renderLoginForm = (balances, errorMessage) => (
     <LoginForm
       onSubmit={(userData) => {
         login(userData.username, userData.password);
       }}
       onSwitchToRegister={() => setShowLoginForm(false)}
-      usernames={players.map(player => player.username)}
+      usernames={balances.map(player => player.username)}
       errorMessage={errorMessage}
     />
   );
@@ -50,6 +44,33 @@ const BlackJackSheet = () => {
       errorMessage={errorMessage}
     />
   );
+
+  const getBalances = async () => {
+    try {
+      const response = await fetch('https://api.yedaniel.com/balances', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Failed to retrieve balances: ${response.status} ${errorData}`);
+      }
+  
+      const balances = await response.json();
+      setBalances(balances);
+      console.log('Balances retrieved successfully');
+    } catch (error) {
+      console.error('Error retrieving balances:', error.message);
+      throw error;
+    }
+  }; 
+
+  useEffect(() => {
+    getBalances();
+  }, [loggedIn]);
 
   const updateBalanceSheet = async () => {
     try {
@@ -96,7 +117,7 @@ const BlackJackSheet = () => {
       updateBalanceSheet();
       handleAddPlayerSuccess(username);
 
-      setPlayers(prevPlayers => [...prevPlayers, { username }]);
+      setBalances(prevPlayers => [...prevPlayers, { username, balance: 0 }]);
       console.log('Player added successfully');
     } catch (error) {
       setErrorMessage(`Error adding player`);
@@ -163,31 +184,6 @@ const BlackJackSheet = () => {
     }
   };
   
-
-  const getBalances = async () => {
-    try {
-      const response = await fetch('https://api.yedaniel.com/balances', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Failed to retrieve balances: ${response.status} ${errorData}`);
-      }
-  
-      const balances = await response.json();
-      setBalances(balances);
-      console.log('Balances retrieved successfully');
-    } catch (error) {
-      console.error('Error retrieving balances:', error.message);
-      throw error;
-    }
-  }; 
-  
-  
   return (
     <Container maxWidth="md" sx={{ mt: 4, bgcolor: 'transparent', color: 'white' }}>
       <Paper elevation={3} sx={{ p: 6, borderRadius: 2, bgcolor: '#1a1a1a' }}>
@@ -198,7 +194,7 @@ const BlackJackSheet = () => {
         {loggedIn ? (
           <>
             <Box sx={{ my: 3 }}>
-              <AddDebtForm players={players} onAddDebt={transferBalance} user={currentUser}/>
+              <AddDebtForm players={balances} onAddDebt={transferBalance} user={currentUser}/>
             </Box>
             <Grid container justifyContent="center">
               <BalanceSheet balances={balances} />
@@ -206,7 +202,7 @@ const BlackJackSheet = () => {
           </>
         ) : (
           <Box sx={{ my: 3 }}>
-            {showLoginForm ? renderLoginForm(players, errorMessage) : renderAddPlayerForm(errorMessage)}
+            {showLoginForm ? renderLoginForm(balances, errorMessage) : renderAddPlayerForm(errorMessage)}
             <Button onClick={() => setShowLoginForm(!showLoginForm)} fullWidth>
               {showLoginForm ? "Add New Player" : "Login"}
             </Button>
