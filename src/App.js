@@ -1,48 +1,16 @@
+// App.js
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import About from './pages/About';
+import HomePage from './pages/Homepage';
+import BlackJackSheet from './blackjack/BlackJackSheet';
 
-function App() {
-  const appStyle = {
-    minHeight: '100vh',
-    color: 'white',
-    fontFamily: 'monospace',
-    textAlign: 'center',
-    backgroundColor: '#120A2F',
-    padding: '20px',
-  };
-
-  const linkStyle = {
-    color: '#007BFF',
-    textDecoration: 'none',
-    margin: '0 10px',
-  };
-
-  const linksContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    listStyleType: 'none',
-    padding: 0,
-    marginTop: '20px',
-  };
-
-  return (
-    <div style={appStyle}>
-      <header>
-        <h1>Daniel Ye</h1>
-      </header>
-      <main>
-        <p>This is my website :)</p>
-        <section>
-          <h2>Resources</h2>
-          <ul style={linksContainerStyle}>
-            <li><a href="/Daniel_Ye_Resume.pdf" style={linkStyle} target="_blank" rel="noopener noreferrer">Resume</a></li>
-            <li><a href="https://linkedin.com/in/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="https://github.com/danielyedaniel" style={linkStyle} target="_blank" rel="noopener noreferrer">Github</a></li>
-            {/* <li><a href="/about" style={linkStyle}>About Me</a></li> */}
-          </ul>
-        </section>
-      </main>
-    </div>
-  );
-}
+const App = () => (
+  <Routes>
+    <Route path="/" element={<HomePage />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/blackjack" element={<BlackJackSheet />} />
+  </Routes>
+);
 
 export default App;
